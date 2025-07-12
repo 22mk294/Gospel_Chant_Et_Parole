@@ -1,0 +1,17 @@
+# Fichiers et dossiers à ignorer par nodemon
+*.log
+*.txt
+*.md
+.env
+.git/
+node_modules/
+coverage/
+logs/
+uploads/
+swagger/
+serveur/tests/
+*.test.js
+package-lock.json
+.vscode/
+.DS_Store
+Thumbs.db
