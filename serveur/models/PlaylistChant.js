@@ -1,17 +1,17 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Favoris = sequelize.define('Favoris', {
+const PlaylistChant = sequelize.define('PlaylistChant', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  utilisateur_id: {
+  playlist_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'utilisateurs',
+      model: 'playlists',
       key: 'id'
     }
   },
@@ -23,25 +23,34 @@ const Favoris = sequelize.define('Favoris', {
       key: 'id'
     }
   },
+  ordre: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
   date_ajout: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   },
-  notes_personnelles: {
-    type: DataTypes.TEXT,
-    allowNull: true
+  ajoute_par: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'utilisateurs',
+      key: 'id'
+    }
   }
 }, {
-  tableName: 'favoris',
+  tableName: 'playlist_chants',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
   indexes: [
     {
       unique: true,
-      fields: ['utilisateur_id', 'chant_id']
+      fields: ['playlist_id', 'chant_id']
     }
   ]
 });
 
-module.exports = Favoris;
+module.exports = PlaylistChant;

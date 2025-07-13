@@ -1,19 +1,11 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Favoris = sequelize.define('Favoris', {
+const ChantTag = sequelize.define('ChantTag', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
-  },
-  utilisateur_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'utilisateurs',
-      key: 'id'
-    }
   },
   chant_id: {
     type: DataTypes.INTEGER,
@@ -23,25 +15,37 @@ const Favoris = sequelize.define('Favoris', {
       key: 'id'
     }
   },
-  date_ajout: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+  tag_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'tags',
+      key: 'id'
+    }
   },
-  notes_personnelles: {
-    type: DataTypes.TEXT,
-    allowNull: true
+  ajoute_par: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'utilisateurs',
+      key: 'id'
+    },
+    comment: 'Utilisateur qui a ajouté ce tag'
   }
 }, {
-  tableName: 'favoris',
+  tableName: 'chant_tags',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
   indexes: [
     {
       unique: true,
-      fields: ['utilisateur_id', 'chant_id']
+      fields: ['chant_id', 'tag_id']
+    },
+    {
+      fields: ['tag_id']
     }
   ]
 });
 
-module.exports = Favoris;
+module.exports = ChantTag;

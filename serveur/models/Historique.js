@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Favoris = sequelize.define('Favoris', {
+const Historique = sequelize.define('Historique', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -23,25 +23,40 @@ const Favoris = sequelize.define('Favoris', {
       key: 'id'
     }
   },
-  date_ajout: {
+  date_ecoute: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   },
-  notes_personnelles: {
-    type: DataTypes.TEXT,
+  duree_ecoute: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    comment: 'Durée en secondes'
+  },
+  termine: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  appareil: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  navigateur: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  ip_address: {
+    type: DataTypes.STRING(45),
+    allowNull: true
+  },
+  localisation: {
+    type: DataTypes.JSON,
     allowNull: true
   }
 }, {
-  tableName: 'favoris',
+  tableName: 'historiques',
   timestamps: true,
   createdAt: 'created_at',
-  updatedAt: 'updated_at',
-  indexes: [
-    {
-      unique: true,
-      fields: ['utilisateur_id', 'chant_id']
-    }
-  ]
+  updatedAt: 'updated_at'
 });
 
-module.exports = Favoris;
+module.exports = Historique;

@@ -7,33 +7,60 @@ const Signalement = sequelize.define('Signalement', {
     primaryKey: true,
     autoIncrement: true
   },
-  chant_id: {
+  type_contenu: {
+    type: DataTypes.ENUM('chant', 'commentaire', 'utilisateur', 'playlist'),
+    allowNull: false
+  },
+  contenu_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  utilisateur_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'Chants',
+      model: 'utilisateurs',
       key: 'id'
     }
   },
+  raison: {
+    type: DataTypes.ENUM(
+      'contenu_inapproprie',
+      'copyright',
+      'spam',
+      'fausses_informations',
+      'harcelement',
+      'autre'
+    ),
+    allowNull: false
+  },
   description: {
     type: DataTypes.TEXT,
-    allowNull: false,
-    validate: {
-      len: [10, 500]
+    allowNull: true
+  },
+  statut: {
+    type: DataTypes.ENUM('en_attente', 'traite', 'rejete', 'valide'),
+    defaultValue: 'en_attente'
+  },
+  traite_par: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'utilisateurs',
+      key: 'id'
     }
   },
-  user_id: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    comment: 'UUID anonyme ou ID utilisateur (optionnel)'
-  },
-  status: {
-    type: DataTypes.ENUM('pending', 'reviewed', 'resolved', 'rejected'),
-    defaultValue: 'pending'
-  },
-  created_at: {
+  date_traitement: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+    allowNull: true
+  },
+  action_prise: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  priorite: {
+    type: DataTypes.ENUM('faible', 'moyenne', 'haute', 'critique'),
+    defaultValue: 'moyenne'
   }
 }, {
   tableName: 'signalements',
