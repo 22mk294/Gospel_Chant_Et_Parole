@@ -7,6 +7,7 @@
     "build": "echo 'Build completed'",
     "dev": "nodemon serveur/server.js",
     "init-postgres": "node serveur/scripts/init-postgres.js",
+    "test-postgres": "node test-postgres-connection.js",
     "check-deployment": "node check-deployment.js",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll --detectOpenHandles",
