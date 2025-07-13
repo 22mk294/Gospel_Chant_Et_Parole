@@ -160,4 +160,75 @@ router.get('/', verifyToken, periodValidation, handleValidationErrors, statistiq
  */
 router.get('/chants/:id', verifyToken, periodValidation, handleValidationErrors, statistiqueController.getChantStats);
 
+// Route pour les statistiques du dashboard
+router.get('/dashboard', verifyToken, async (req, res) => {
+  try {
+    const { Chant, Category } = require('../models');
+    
+    // Compter le nombre total de chants
+    const totalChants = await Chant.count();
+    
+    // Compter le nombre total de catégories
+    const totalCategories = await Category.count();
+    
+    // Compter les chants par catégorie
+    const chantsByCategory = await Category.findAll({
+      attributes: ['id', 'name'],
+      include: [{
+        model: Chant,
+        attributes: ['id'],
+        required: false
+      }]
+    });
+    
+    // Calculer les statistiques par catégorie
+    const categoryStats = chantsByCategory.map(category => ({
+      id: category.id,
+      name: category.name,
+      chantsCount: category.Chants ? category.Chants.length : 0
+    }));
+    
+    // Obtenir les chants récents (5 derniers)
+    const recentChants = await Chant.findAll({
+      limit: 5,
+      order: [['createdAt', 'DESC']],
+      include: [{
+        model: Category,
+        attributes: ['id', 'name']
+      }]
+    });
+    
+    // Calculer la moyenne de chants par catégorie
+    const averageChantsByCategory = totalCategories > 0 ? (totalChants / totalCategories).toFixed(2) : 0;
+    
+    // Statistiques détaillées
+    const stats = {
+      totalChants,
+      totalCategories,
+      averageChantsByCategory,
+      categoryStats,
+      recentChants: recentChants.map(chant => ({
+        id: chant.id,
+        title: chant.title,
+        artist: chant.artist,
+        category: chant.Category ? chant.Category.name : 'Sans catégorie',
+        createdAt: chant.createdAt
+      }))
+    };
+    
+    res.json({
+      success: true,
+      data: stats
+    });
+    
+  } catch (error) {
+    console.error('Erreur lors de la récupération des statistiques:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la récupération des statistiques',
+      error: error.message
+    });
+  }
+});
+
 module.exports = router;
