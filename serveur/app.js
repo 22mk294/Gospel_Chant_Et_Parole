@@ -113,6 +113,16 @@ app.get('/test', (req, res) => {
   res.sendFile(path.join(__dirname, '../test-api.html'));
 });
 
+// Route de health check pour Render
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    service: 'Gospel Chante et Parole API',
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
 // Gestion des routes non trouvées
 app.use('*', (req, res) => {
   res.status(404).json({
