@@ -73,13 +73,13 @@ Playlist.belongsToMany(Chant, {
   through: PlaylistChant, 
   foreignKey: 'playlist_id',
   otherKey: 'chant_id',
-  as: 'chants'
+  as: 'chantsPlaylist'
 });
 Chant.belongsToMany(Playlist, { 
   through: PlaylistChant, 
   foreignKey: 'chant_id',
   otherKey: 'playlist_id',
-  as: 'playlists'
+  as: 'playlistsAssociees'
 });
 
 // Tags -> Relations Many-to-Many
@@ -87,13 +87,13 @@ Tag.belongsToMany(Chant, {
   through: ChantTag, 
   foreignKey: 'tag_id',
   otherKey: 'chant_id',
-  as: 'chants'
+  as: 'chantsAssocies'
 });
 Chant.belongsToMany(Tag, { 
   through: ChantTag, 
   foreignKey: 'chant_id',
   otherKey: 'tag_id',
-  as: 'tags'
+  as: 'tagsAssocies'
 });
 
 // Evenements -> Relations
@@ -101,13 +101,13 @@ Evenement.belongsToMany(Utilisateur, {
   through: EvenementParticipant, 
   foreignKey: 'evenement_id',
   otherKey: 'utilisateur_id',
-  as: 'participants'
+  as: 'participantsEvenement'
 });
 Utilisateur.belongsToMany(Evenement, { 
   through: EvenementParticipant, 
   foreignKey: 'utilisateur_id',
   otherKey: 'evenement_id',
-  as: 'evenements'
+  as: 'evenementsInscrits'
 });
 
 // Messages -> Relations (auto-référence)
