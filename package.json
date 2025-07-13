@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "serveur/server.js",
   "scripts": {
-    "start": "node serveur/server.js",
+    "start": "node serveur/start-production.js",
+    "start:dev": "node serveur/server.js",
     "build": "echo 'Build completed'",
     "dev": "nodemon serveur/server.js",
     "init-postgres": "node serveur/scripts/init-postgres.js",
