@@ -134,10 +134,22 @@ app.use('*', (req, res) => {
 app.use(errorHandler);
 
 // Synchronisation de la base de données
-sequelize.sync().then(() => {
-  console.log('✅ Base de données synchronisée.');
-}).catch(err => {
-  console.error('❌ Erreur de synchronisation DB:', err);
-});
+if (process.env.NODE_ENV === 'production') {
+  // En production, ne pas forcer la synchronisation
+  sequelize.sync({ force: false, alter: false }).then(() => {
+    console.log('✅ Base de données synchronisée (production).');
+  }).catch(err => {
+    console.error('❌ Erreur de synchronisation DB:', err);
+    // En production, ne pas arrêter le serveur pour une erreur de sync
+    console.log('⚠️ Serveur démarré malgré l\'erreur de synchronisation');
+  });
+} else {
+  // En développement, synchronisation normale
+  sequelize.sync().then(() => {
+    console.log('✅ Base de données synchronisée (développement).');
+  }).catch(err => {
+    console.error('❌ Erreur de synchronisation DB:', err);
+  });
+}
 
 module.exports = app;

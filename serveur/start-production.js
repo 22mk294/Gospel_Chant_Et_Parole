@@ -1,20 +1,13 @@
-const initializeProductionDatabase = require('./init-production-db');
+// Configuration spécifique pour la production sur Render
+require('dotenv').config();
 
-async function startServer() {
-  try {
-    console.log('🚀 Démarrage du serveur Gospel Chant et Parole...');
-    
-    // Initialiser la base de données
-    await initializeProductionDatabase();
-    
-    // Démarrer le serveur
-    console.log('🔄 Démarrage du serveur Express...');
-    require('./server');
-    
-  } catch (error) {
-    console.error('❌ Erreur lors du démarrage:', error);
-    process.exit(1);
-  }
-}
+// Forcer l'environnement de production
+process.env.NODE_ENV = 'production';
 
-startServer();
+console.log('🚀 Démarrage en mode production');
+console.log('📍 NODE_ENV:', process.env.NODE_ENV);
+console.log('🔗 DATABASE_URL présente:', !!process.env.DATABASE_URL);
+
+// Démarrer directement le serveur sans initialisation complexe
+console.log('🔄 Démarrage du serveur Express...');
+require('./server');

@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'test') {
       freezeTableName: false
     }
   });
-} else if (process.env.NODE_ENV === 'production') {
+} else if (process.env.NODE_ENV === 'production' || process.env.DATABASE_URL) {
   // Configuration pour la production avec PostgreSQL (Render)
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
@@ -25,7 +25,13 @@ if (process.env.NODE_ENV === 'test') {
         rejectUnauthorized: false
       }
     },
-    logging: false,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
+    logging: console.log,
     define: {
       timestamps: true,
       underscored: false,
