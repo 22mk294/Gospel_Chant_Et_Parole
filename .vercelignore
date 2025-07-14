@@ -1,0 +1,14 @@
+node_modules
+serveur
+coverage
+database
+deploy-ready
+*.md
+*.log
+*.env
+!.env.production
+.git
+.github
+test-*
+*.test.js
+*.spec.js

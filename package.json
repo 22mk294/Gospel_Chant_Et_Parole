@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node serveur/start-production.js",
     "start:dev": "node serveur/server.js",
-    "build": "echo 'Build completed'",
+    "build": "cd admin && npm install && npm run build",
     "dev": "nodemon serveur/server.js",
     "init-postgres": "node serveur/scripts/init-postgres.js",
     "fix-database": "node serveur/scripts/fix-database-sync.js",
