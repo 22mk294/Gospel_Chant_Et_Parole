@@ -5,7 +5,7 @@ export const statsService = {
   async getDashboard() {
     try {
       console.log('🔄 Récupération des statistiques dashboard...');
-      const response = await api.get('/stats/dashboard');
+      const response = await api.get('/api/stats/dashboard');
       console.log('✅ Réponse stats:', response.data);
       
       // Vérifier la structure de la réponse
@@ -28,7 +28,7 @@ export const statsService = {
   // Récupérer les statistiques des chants
   async getChantStats() {
     try {
-      const response = await api.get('/stats/chants');
+      const response = await api.get('/api/stats/chants');
       return { success: true, data: response.data };
     } catch (error) {
       return {
@@ -41,7 +41,7 @@ export const statsService = {
   // Récupérer les statistiques des catégories
   async getCategoryStats() {
     try {
-      const response = await api.get('/stats/categories');
+      const response = await api.get('/api/stats/categories');
       return { success: true, data: response.data };
     } catch (error) {
       return {
@@ -55,7 +55,7 @@ export const statsService = {
   async getAllStats() {
     try {
       console.log('🔄 Récupération de toutes les statistiques...');
-      const response = await api.get('/stats/dashboard');
+      const response = await api.get('/api/stats/dashboard');
       console.log('✅ Réponse getAllStats:', response.data);
       
       // Vérifier la structure de la réponse
@@ -75,7 +75,7 @@ export const statsService = {
   // Enregistrer un événement de tracking
   async trackEvent(eventData) {
     try {
-      const response = await api.post('/stats/track', eventData);
+      const response = await api.post('/api/stats/track', eventData);
       return { success: true, data: response.data };
     } catch (error) {
       return {

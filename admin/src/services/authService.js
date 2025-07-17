@@ -4,7 +4,7 @@ export const authService = {
   // Connexion admin
   async login(credentials) {
     try {
-      const response = await api.post('/auth/login', credentials);
+      const response = await api.post('/api/auth/login', credentials);
       const { token, admin } = response.data;
       
       // Stocker le token et les données admin
@@ -23,7 +23,7 @@ export const authService = {
   // Inscription admin
   async register(adminData) {
     try {
-      const response = await api.post('/auth/register', adminData);
+      const response = await api.post('/api/auth/register', adminData);
       return { success: true, data: response.data };
     } catch (error) {
       return {
@@ -36,7 +36,7 @@ export const authService = {
   // Récupérer le profil admin
   async getProfile() {
     try {
-      const response = await api.get('/auth/profile');
+      const response = await api.get('/api/auth/profile');
       return { success: true, data: response.data };
     } catch (error) {
       return {
