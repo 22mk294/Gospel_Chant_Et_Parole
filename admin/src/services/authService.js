@@ -47,10 +47,33 @@ export const authService = {
   },
 
   // Déconnexion
-  logout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('adminData');
-    window.location.href = '/login';
+  async logout() {
+    try {
+      // Appel au backend pour invalider le token (optionnel)
+      try {
+        await api.post('/api/auth/logout');
+      } catch (error) {
+        console.warn('Erreur lors de la déconnexion côté serveur:', error);
+      }
+      
+      // Nettoyage du localStorage
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('adminData');
+      
+      // Redirection vers la page de connexion
+      window.location.href = '/login';
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion:', error);
+      
+      // Forcer la déconnexion même en cas d'erreur
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('adminData');
+      window.location.href = '/login';
+      
+      return { success: false, message: 'Erreur lors de la déconnexion' };
+    }
   },
 
   // Vérifier si l'utilisateur est connecté

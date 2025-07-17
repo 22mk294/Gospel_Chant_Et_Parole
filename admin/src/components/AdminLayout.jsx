@@ -32,6 +32,7 @@ import {
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import Logo from './common/Logo';
 
 const drawerWidth = 240;
 
@@ -75,6 +76,11 @@ const AdminLayout = ({ children }) => {
     handleProfileMenuClose();
   };
 
+  const handleSettingsClick = () => {
+    navigate('/settings');
+    handleProfileMenuClose();
+  };
+
   const handleNavigation = (path) => {
     navigate(path);
     if (isMobile) {
@@ -85,9 +91,11 @@ const AdminLayout = ({ children }) => {
   const drawer = (
     <Box>
       <Toolbar>
-        <Typography variant="h6" noWrap component="div">
-          Gospel Admin
-        </Typography>
+        <Logo 
+          size="medium" 
+          showText={true} 
+          onClick={() => navigate('/dashboard')}
+        />
       </Toolbar>
       <Divider />
       <List>
@@ -145,6 +153,9 @@ const AdminLayout = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
+          <Box sx={{ display: { xs: 'block', md: 'none' }, mr: 2 }}>
+            <Logo size="small" showText={true} variant="white" />
+          </Box>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             {menuItems.find(item => item.path === location.pathname)?.text || 'Admin'}
           </Typography>
@@ -189,6 +200,12 @@ const AdminLayout = ({ children }) => {
             <AccountCircle fontSize="small" />
           </ListItemIcon>
           <ListItemText>Profil</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleSettingsClick}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Paramètres</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>

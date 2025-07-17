@@ -46,10 +46,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    authService.logout();
-    setIsAuthenticated(false);
-    setAdmin(null);
+  const logout = async () => {
+    try {
+      await authService.logout();
+      setIsAuthenticated(false);
+      setAdmin(null);
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion:', error);
+      // Forcer la déconnexion même en cas d'erreur
+      setIsAuthenticated(false);
+      setAdmin(null);
+    }
   };
 
   const value = {

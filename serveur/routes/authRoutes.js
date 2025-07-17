@@ -115,4 +115,20 @@ router.post('/login', login, handleValidationErrors, authController.login);
  */
 router.get('/profile', verifyToken, authController.profile);
 
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Déconnexion de l'administrateur
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Déconnexion réussie
+ *       401:
+ *         description: Token manquant ou invalide
+ */
+router.post('/logout', verifyToken, authController.logout);
+
 module.exports = router;

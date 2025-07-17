@@ -120,3 +120,21 @@ exports.profile = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.logout = async (req, res, next) => {
+  try {
+    // En JWT, on ne peut pas vraiment "invalider" un token côté serveur
+    // sans maintenir une blacklist. Pour l'instant, on confirme juste la déconnexion.
+    // Dans une implémentation plus avancée, on pourrait :
+    // 1. Maintenir une blacklist des tokens
+    // 2. Raccourcir l'expiration des tokens
+    // 3. Utiliser des refresh tokens
+    
+    res.json({
+      success: true,
+      message: 'Déconnexion réussie'
+    });
+  } catch (err) {
+    next(err);
+  }
+};

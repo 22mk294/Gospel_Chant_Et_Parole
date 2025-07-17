@@ -7,6 +7,7 @@
     "start:dev": "node serveur/server.js",
     "build": "cd admin && npm install && npm run build",
     "dev": "nodemon serveur/server.js",
+    "deploy": "node deploy.js",
     "init-postgres": "node serveur/scripts/init-postgres.js",
     "fix-database": "node serveur/scripts/fix-database-sync.js",
     "test-postgres": "node test-postgres-connection.js",

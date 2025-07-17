@@ -13,18 +13,54 @@ import Dashboard from './pages/Dashboard';
 import Chants from './pages/Chants';
 import Categories from './pages/Categories';
 import Profile from './pages/Profile';
+import Settings from './components/Settings/Settings';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#f44336',
+      light: '#ff7961',
+      dark: '#ba000d',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#e91e63',
+      light: '#ff6090',
+      dark: '#b0003a',
+    },
+    background: {
+      default: '#f5f5f5',
+      paper: '#ffffff',
     },
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontWeight: 600,
+    },
+    h2: {
+      fontWeight: 600,
+    },
+    h3: {
+      fontWeight: 600,
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          boxShadow: '0 2px 12px rgba(0,0,0,0.1)',
+        },
+      },
+    },
   },
 });
 
@@ -46,6 +82,7 @@ function App() {
                       <Route path="/chants" element={<Chants />} />
                       <Route path="/categories" element={<Categories />} />
                       <Route path="/profile" element={<Profile />} />
+                      <Route path="/settings" element={<Settings />} />
                       <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     </Routes>
                   </AdminLayout>

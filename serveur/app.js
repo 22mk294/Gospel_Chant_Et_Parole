@@ -13,12 +13,14 @@ const sequelize = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const chantRoutes = require('./routes/chantRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const favorisRoutes = require('./routes/favorisRoutes');
 const signalementRoutes = require('./routes/signalementRoutes');
 const statistiqueRoutes = require('./routes/statistiqueRoutes');
 const syncRoutes = require('./routes/syncRoutes');
 const healthRoutes = require('./routes/healthRoutes');
 const errorHandler = require('./middlewares/errorHandler');
+const { verifyToken } = require('./middlewares/authMiddleware');
 const serveFavicon = require('./middlewares/favicon');
 
 const app = express();
@@ -85,13 +87,14 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Documentation Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Documentation Swagger (protégée par authentification)
+app.use('/api-docs', verifyToken, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/chants', chantRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/api/favoris', favorisRoutes);
 app.use('/api/signalements', signalementRoutes);
 app.use('/api/stats', statistiqueRoutes);

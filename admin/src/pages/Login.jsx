@@ -24,6 +24,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../components/common/Logo';
 
 const schema = yup.object().shape({
   username: yup.string().required('Le nom d\'utilisateur est requis'),
@@ -77,11 +78,11 @@ const Login = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-          <LockOutlined />
-        </Avatar>
+        <Box sx={{ mb: 2 }}>
+          <Logo size="large" showText={true} />
+        </Box>
         <Typography component="h1" variant="h4" gutterBottom>
-          Gospel Admin
+          Administration
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
           Panneau d'administration
