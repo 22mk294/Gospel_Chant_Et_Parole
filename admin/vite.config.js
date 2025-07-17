@@ -23,5 +23,7 @@ export default defineConfig({
   },
   preview: {
     port: 3000
-  }
+  },
+  // Configuration pour les SPA sur Render
+  publicDir: 'public'
 })

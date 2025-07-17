@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: gospel-chant-et-parole-frontend
+    env: static
+    buildCommand: cd admin && npm install && npm run build
+    staticPublishPath: admin/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://gospel-chant-et-parole-api.onrender.com
+      - key: REACT_APP_ENV
+        value: production
