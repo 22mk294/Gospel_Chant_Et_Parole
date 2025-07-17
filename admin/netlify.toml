@@ -3,9 +3,18 @@
   publish = "dist"
   
 [build.environment]
+  VITE_APP_NAME = "Gospel Chant et Parole - Admin"
+  VITE_APP_VERSION = "1.0.0"
   VITE_API_URL = "https://gospel-chant-et-parole.onrender.com"
   VITE_API_BASE_URL = "https://gospel-chant-et-parole.onrender.com"
+  VITE_API_VERSION = "v1"
   VITE_NODE_ENV = "production"
+  VITE_ENV = "production"
+  VITE_DB_TYPE = "PostgreSQL"
+  VITE_DB_HOST = "dpg-d1ptb7vfte5s73cnq080-a.oregon-postgres.render.com"
+  VITE_DB_NAME = "gospelchantetparole"
+  VITE_DB_PORT = "5432"
+  VITE_DB_SSL = "true"
   VITE_JWT_STORAGE_KEY = "gospel_admin_token"
   VITE_JWT_EXPIRE_TIME = "604800000"
   VITE_LOGIN_REDIRECT_URL = "/dashboard"
@@ -15,3 +24,12 @@
   from = "/*"
   to = "/index.html"
   status = 200
+  
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://gospel-chant-et-parole.onrender.com; media-src 'self' data:;"
