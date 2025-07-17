@@ -78,11 +78,11 @@ function App() {
                 <ProtectedRoute>
                   <AdminLayout>
                     <Routes>
-                      <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/chants" element={<Chants />} />
-                      <Route path="/categories" element={<Categories />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/settings" element={<Settings />} />
+                      <Route path="dashboard" element={<Dashboard />} />
+                      <Route path="chants" element={<Chants />} />
+                      <Route path="categories" element={<Categories />} />
+                      <Route path="profile" element={<Profile />} />
+                      <Route path="settings" element={<Settings />} />
                       <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     </Routes>
                   </AdminLayout>

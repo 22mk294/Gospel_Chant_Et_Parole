@@ -1,13 +1,42 @@
 version: 2
 
 services:
+  # Frontend Static Site
   - type: web
-    name: gospel-backend
+    name: gospel-chant-et-parole-frontend
+    env: static
+    buildCommand: cd admin && npm ci && npm run build
+    staticPublishPath: admin/dist
+    # This is crucial for SPA routing
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        headers:
+          - key: X-Content-Type-Options
+            value: nosniff
+          - key: X-Frame-Options
+            value: DENY
+          - key: X-XSS-Protection
+            value: 1; mode=block
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://gospel-chant-et-parole-api.onrender.com
+      - key: REACT_APP_ENV
+        value: production
+      - key: NODE_ENV
+        value: production
+
+  # Backend API
+  - type: web
+    name: gospel-chant-et-parole-api
     env: node
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci
     startCommand: npm start
     plan: free
-    healthCheckPath: /health
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
@@ -16,7 +45,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGIN
-        value: https://your-frontend-domain.vercel.app
+        value: https://gospel-chant-et-parole-frontend.onrender.com
 
   - type: pgsql
     name: gospel-database
